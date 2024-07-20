@@ -1,28 +1,24 @@
 resource "google_compute_network" "tf-gcp" {
-  name                    = "test-network"
+  name                    = var.network_name
   auto_create_subnetworks = false
 }
 
 resource "google_compute_subnetwork" "tf-gcp" {
-  name          = "test-subnetwork"
-  ip_cidr_range = "10.2.0.0/16"
-  region        = "europe-west2"
+  name          = var.network_name
+  ip_cidr_range = var.network_range
+  region        = var.region
   network       = google_compute_network.tf-gcp.id
-  secondary_ip_range {
-    range_name    = "sub-range-test"
-    ip_cidr_range = "192.168.10.0/24"
-  }
 }
 
 data "google_compute_image" "ubuntu" {
   most_recent = true
-  project     = "ubuntu-os-cloud" 
-  family      = "ubuntu-2204-lts"
+  project     = var.image_project
+  family      = var.image_family
 }
 
 resource "google_compute_instance" "web" {
-  name         = "tf-test"
-  machine_type = "e2-micro"
+  name         = var.app_name
+  machine_type = var.machine_type
 
   
   boot_disk {
@@ -31,7 +27,7 @@ resource "google_compute_instance" "web" {
     }
   }
   network_interface {
-   subnetwork = "test-subnetwork"
+   subnetwork = var.network_name
    access_config {
       # Leave empty for dynamic public IP
     }
