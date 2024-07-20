@@ -1,5 +1,5 @@
 provider "google" {
-  project = ""
-  region  = "us-west1"
-  zone    = "us-west1-a"
+  project = "intense-wavelet-429717-f9"
+  region  = "eu-west1"
+  zone    = "eu-west1-a"
 }
