@@ -1,6 +1,36 @@
+module "bar_network" {
+  source  = "terraform-google-modules/network/google"
+  version = "9.1.0"
+  network_name = "$(var.network_name)-ab"
+  project_id = var.project_name
+  subnets = [
+        {
+            subnet_name = "$(var.network_name)-sub0"
+            subnet_ip = var.network_range
+            subnet_region = var.region
+        }
+  ]
+
+  ingress_rules = [
+    {
+    name = "${var.network_name}--allow-bar"
+    description = "Inbound ingress test"
+    source_ranges = ["46.116.120.138/32"]
+    target_tags = ["${var.network_name}--allow-bar-all"]
+
+    allow = [
+      {
+        protocol = "tcp"
+        ports    = ["1-65535"]
+      }
+    ]
+
+    }
+  ]
+}
+
 resource "google_compute_network" "tf-gcp" {
   name                    = var.network_name
-  auto_create_subnetworks = false
 }
 
 resource "google_compute_subnetwork" "tf-gcp" {
@@ -27,7 +57,7 @@ resource "google_compute_instance" "web" {
     }
   }
   network_interface {
-   subnetwork = var.network_name
+   subnetwork = module.bar_network.subnets_names[0]
    access_config {
       # Leave empty for dynamic public IP
     }
