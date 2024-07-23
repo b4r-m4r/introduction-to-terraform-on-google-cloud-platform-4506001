@@ -1,7 +1,7 @@
 module "bar_network" {
   source  = "terraform-google-modules/network/google"
   version = "9.1.0"
-  network_name = "$(var.network_name)-ab"
+  network_name = "${var.network_name}-ab"
   project_id = var.project_name
   subnets = [
         {
