@@ -12,3 +12,12 @@ resource "google_storage_bucket_object" "uno" {
   content_type = "text/plain"
   bucket = module.cloud-storage.names_list[0]
 }
+
+data "google_storage_bucket_object" "index" {
+  name = "index.html"
+  bucket = module.cloud-storage.names_list[0]
+}
+
+output "index_con" {
+  value = data.google_storage_bucket_object.index.content
+}

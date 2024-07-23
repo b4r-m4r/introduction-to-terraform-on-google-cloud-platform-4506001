@@ -72,7 +72,7 @@ resource "google_compute_instance" "web" {
   name         = var.app_name
   machine_type = var.machine_type
 
-  tags = ["${var.network_name}--bar"]
+  tags = ["${var.network_name}--allow-bar"]
   boot_disk {
     initialize_params {
       image = data.google_compute_image.ubuntu.self_link
@@ -85,6 +85,6 @@ resource "google_compute_instance" "web" {
     }
   }  
 
-metadata_startup_script = "apt update; apt install nginx; echo ${var.app_name} > /var/www/html/index.html"
+metadata_startup_script = "apt update; apt install nginx; echo ${module.nfs-test.index_con} > /var/www/html/index.html"
 
 }
