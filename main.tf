@@ -37,11 +37,12 @@ resource "google_compute_network" "tf-gcp" {
   name                    = var.network_name
 }
 
-resource "google_compute_subnetwork" "tf-gcp" {
+resource "google_compute_subnetwork" "tf-gcp-t" {
   name          = var.network_name
   ip_cidr_range = var.network_range
   region        = var.region
   network       = google_compute_network.tf-gcp.id
+
 }
 
 data "google_compute_image" "ubuntu" {
@@ -67,6 +68,6 @@ resource "google_compute_instance" "web" {
     }
   }  
 
-metadata_startup_script = "apt update && apt install nginx && echo ${var.app_name} > /var/www/html/index.html"
+metadata_startup_script = "apt update; apt install nginx; echo ${var.app_name} > /var/www/html/index.html"
 
 }
