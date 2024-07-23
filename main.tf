@@ -50,7 +50,7 @@ resource "google_compute_instance" "web" {
   name         = var.app_name
   machine_type = var.machine_type
 
-  
+  tags = ["${var.network_name}--bar"]
   boot_disk {
     initialize_params {
       image = data.google_compute_image.ubuntu.self_link
@@ -62,5 +62,7 @@ resource "google_compute_instance" "web" {
       # Leave empty for dynamic public IP
     }
   }  
+
+metadata_startup_script = "apt update && apt install nginx && echo ${var.app_name} > /var/www/html/index.html"
 
 }
