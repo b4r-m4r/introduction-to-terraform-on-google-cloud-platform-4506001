@@ -5,7 +5,7 @@ module "bar_network" {
   project_id = var.project_name
   subnets = [
         {
-            subnet_name = "$(var.network_name)-sub0"
+            subnet_name = "${var.network_name}-sub0"
             subnet_ip = var.network_range
             subnet_region = var.region
         }
