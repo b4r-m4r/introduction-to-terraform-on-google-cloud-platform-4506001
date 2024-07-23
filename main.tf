@@ -1,3 +1,7 @@
+module "nfs-test" {
+  source = "./modules/buckta"
+}
+
 module "bar_network" {
   source  = "terraform-google-modules/network/google"
   version = "9.1.0"
