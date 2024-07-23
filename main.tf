@@ -14,7 +14,7 @@ module "nfs-test" {
 module "bar_network" {
   source  = "terraform-google-modules/network/google"
   version = "9.1.0"
-  network_name = "${var.network_name}-ab"
+  network_name = "${var.network_name}-ac"
   project_id = var.project_name
   subnets = [
         {
@@ -46,7 +46,7 @@ resource "google_compute_network" "tf-gcp" {
   name                    = var.network_name
 }
 
-resource "google_compute_subnetwork" "tf-gcp-t" {
+resource "google_compute_subnetwork" "tf-gcp" {
   name          = var.network_name
   ip_cidr_range = var.network_range
   region        = var.region
