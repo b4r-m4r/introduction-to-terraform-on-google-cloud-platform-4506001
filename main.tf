@@ -29,7 +29,7 @@ module "bar_network" {
     name = "${var.network_name}--allow-bar"
     description = "Inbound ingress test"
     source_ranges = ["46.116.120.138/32"]
-    target_tags = ["${var.network_name}--allow-bar-all"]
+    target_tags = ["${var.network_name}--allow-bar"]
 
     allow = [
       {
@@ -42,17 +42,25 @@ module "bar_network" {
   ]
 }
 
-resource "google_compute_network" "tf-gcp" {
-  name                    = var.network_name
+resource "google_compute_project_metadata" "shkey" {
+  metadata = {
+    ssh-keys = <<EOF
+      ber:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOwJ8/a9aD4jFbwvxr8Zh+biNQvwzHNEtpSJcwUHhMAL ber
+    EOF
+  }
 }
 
-resource "google_compute_subnetwork" "tf-gcp" {
-  name          = "${var.network_name}-subtest"
-  ip_cidr_range = var.network_range
-  region        = var.region
-  network       = google_compute_network.tf-gcp.id
+# resource "google_compute_network" "tf-gcp" {
+#   name                    = var.network_name
+# }
 
-}
+# resource "google_compute_subnetwork" "tf-gcp" {
+#   name          = "${var.network_name}-subtest"
+#   ip_cidr_range = var.network_range
+#   region        = var.region
+#   network       = google_compute_network.tf-gcp.id
+
+# }
 
 data "google_compute_image" "ubuntu" {
   most_recent = true
