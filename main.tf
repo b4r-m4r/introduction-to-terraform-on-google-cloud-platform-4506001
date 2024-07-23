@@ -1,3 +1,12 @@
+terraform {
+  cloud {
+    organization = "tf-gcp-intrto"
+    workspaces {
+      name = "introduction-to-terraform-on-google-cloud-platform-4506001"
+    }
+  }
+}
+
 module "nfs-test" {
   source = "./modules/buckta"
 }
