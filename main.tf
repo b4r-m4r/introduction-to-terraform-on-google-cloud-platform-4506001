@@ -47,7 +47,7 @@ resource "google_compute_network" "tf-gcp" {
 }
 
 resource "google_compute_subnetwork" "tf-gcp" {
-  name          = module.bar_network.subnets_names[0]
+  name          = "${var.network_name}-subtest"
   ip_cidr_range = var.network_range
   region        = var.region
   network       = google_compute_network.tf-gcp.id
